@@ -23,32 +23,35 @@ import (
 )
 
 func GeneratePhrase() string {
-	static := []string{
-		"<3 u {0}",
-		"<3 {0} <3",
-		"You the best {0}.",
-		"Need some love {0}? I love you!",
-	}
-	start := []string{
-		"Hey,", "Hi,", "Hello,", "Hi {0}!", "Hey {0},",
-	}
-	mid := []string{
-		"{0} is the best <3.", "I love you {0}.", "you are important {0}.", "{0} is so kind.", "I love you.", "I value you, {0}.", "never give up, {0} you can do it.",
-	}
-	end := []string{
-		"Have a great day.", "Have a great day {0}.", "Can't wait to hear from you again.", "I miss you {0}!", "<3", "<3 <3 <3!", "<3 from me!",
-	}
-	mid = append(mid, NiceThings...)
-	gen := make(map[int][]string)
-	gen[0] = start
-	gen[1] = mid
-	gen[2] = end
+	if len(runTimeCache) == 0 {
+		static := []string{
+			"<3 u {0}",
+			"<3 {0} <3",
+			"You the best {0}.",
+			"Need some love {0}? I love you!",
+		}
+		start := []string{
+			"Hey,", "Hi,", "Hello,", "Hi {0}!", "Hey {0},",
+		}
+		mid := []string{
+			"{0} is the best <3.", "I love you {0}.", "you are important {0}.", "{0} is so kind.", "I love you.", "I value you, {0}.", "never give up, {0} you can do it.",
+		}
+		end := []string{
+			"Have a great day.", "Have a great day {0}.", "Can't wait to hear from you again.", "I miss you {0}!", "<3", "<3 <3 <3!", "<3 from me!",
+		}
+		mid = append(mid, NiceThings...)
+		gen := make(map[int][]string)
+		gen[0] = start
+		gen[1] = mid
+		gen[2] = end
 
-	genList := cartesianProductPhrase(gen)
+		genList := cartesianProductPhrase(gen)
 
-	static = append(static, genList...)
-	static = append(static, NiceThings...)
-	return RandomSliceItem(static)
+		static = append(static, genList...)
+		static = append(static, NiceThings...)
+		runTimeCache = static
+	}
+	return RandomSliceItem(runTimeCache)
 }
 
 func cartesianProductPhrase(gen map[int][]string) []string {
@@ -75,6 +78,8 @@ func RandomSliceItem(s []string) string {
 	k := rand.Int() % len(s)
 	return s[k]
 }
+
+var runTimeCache []string
 
 var NiceThings = []string{
 	"Your smile is contagious.",
