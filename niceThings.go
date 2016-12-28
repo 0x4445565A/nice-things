@@ -14,10 +14,9 @@
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-package main
+package niceThings
 
 import (
-	"fmt"
 	"math/rand"
 	"strings"
 	"time"
@@ -167,8 +166,4 @@ var NiceThings = []string{
 	"You're really something special.",
 	"You're a gift to those around you.",
 	"You're a compelling image.",
-}
-
-func main() {
-	fmt.Println(GeneratePhrase())
 }
